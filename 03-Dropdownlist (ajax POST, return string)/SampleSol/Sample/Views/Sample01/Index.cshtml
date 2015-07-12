@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+@using Sample.Models
+@model Sample.Models.Sample01ViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    @*IMP: The following setting needs to be there in web.config
+        <add key="UnobtrusiveJavaScriptEnabled" value="true" />*@
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.2/jquery.validate.unobtrusive.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
+
+    @*or following, if using jquery 1.9+*@
+    @*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.migrate/jquery-migrate-1.2.1.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.2/jquery.validate.unobtrusive.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>*@
+</head>
+<body>
+    <div>
+        @using (Ajax.BeginForm("PostSelectedCountry", "Sample01",
+                null, //route values
+                new AjaxOptions
+                {
+                    UpdateTargetId = "lblSelectedCountry",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                },
+                new { id = "SampleForm" }))
+        {
+            @Html.DropDownListFor(m => m.SelectedCountry, Model.GetCountriesListItems(), "Select a country", new { @onchange = "jQuery('#SampleForm').submit();" });
+            <span id="lblSelectedCountry"></span>
+        }
+    </div>
+</body>
+</html>
